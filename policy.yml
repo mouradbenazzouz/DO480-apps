@@ -10,6 +10,21 @@ spec:
         apiVersion: policy.open-cluster-management.io/v1
         kind: ConfigurationPolicy
         metadata:
+          name: operator-ns
+        spec:
+          remediationAction: inform
+          severity: high
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: v1
+                kind: Namespace
+                metadata:
+                  name: openshift-eap
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
           name: jboss-eap-subscription
         spec:
           remediationAction: enforce
@@ -20,7 +35,7 @@ spec:
                 kind: Subscription
                 metadata:
                   name: jboss-eap
-                  namespace: openshift-operators
+                  namespace: openshift-eap
                 spec:
                   channel: stable 
                   installPlanApproval: Automatic
@@ -41,7 +56,7 @@ spec:
                 kind: OperatorGroup
                 metadata:
                   name: jboss-eap-group
-                  namespace: openshift-operators
+                  namespace: openshift-eap
                 spec:
                   targetNamespaces:
-                    - openshift-operators
+                    - openshift-eap
