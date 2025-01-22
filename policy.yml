@@ -10,24 +10,6 @@ spec:
         apiVersion: policy.open-cluster-management.io/v1
         kind: ConfigurationPolicy
         metadata:
-          name: jboss-eap-catalogsource
-        spec:
-          remediationAction: enforce
-          object-templates:
-            - complianceType: musthave
-              objectDefinition:
-                apiVersion: operators.coreos.com/v1
-                kind: CatalogSource
-                metadata:
-                  name: do480-catalog
-                  namespace: openshift-marketplace
-                spec:
-                  sourceType: grpc
-                  image: <catalog-source-image> # Replace with your catalog image URL
-    - objectDefinition:
-        apiVersion: policy.open-cluster-management.io/v1
-        kind: ConfigurationPolicy
-        metadata:
           name: jboss-eap-subscription
         spec:
           remediationAction: enforce
@@ -40,7 +22,7 @@ spec:
                   name: jboss-eap
                   namespace: openshift-operators
                 spec:
-                  channel: stable # Update if using a specific channel
+                  channel: stable 
                   installPlanApproval: Automatic
                   name: jboss-eap
                   source: do480-catalog
