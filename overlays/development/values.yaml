@@ -1,0 +1,11 @@
+service:
+  type: LoadBalancer
+  port: 8080
+
+ingress:
+  enabled: true
+  hostname: example.com
+  annotations: {}
+  tls: []
+
+replicaCount: 2
