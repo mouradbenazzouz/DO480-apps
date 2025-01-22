@@ -66,6 +66,46 @@ spec:
                   name: eap
                   source: do480-catalog
                   sourceNamespace: openshift-marketplace
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: jboss-eap-instance
+        spec:
+          remediationAction: enforce
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: eap.jboss.org/v1
+                kind: WildFlyServer
+                metadata:
+                  name: jboss-eap-instance
+                  namespace: openshift-eap
+                spec:
+                  applicationImage: "registry.redhat.io/jboss-eap-7/eap73-openjdk11-openshift:latest"
+                  replicas: 2
+                  env:
+                    - name: DB_SERVICE_PREFIX_MAPPING
+                      value: "example-db-postgresql=DB"
+                    - name: DB_JNDI
+                      value: "java:/jboss/datasources/ExampleDS"
+                    - name: DB_USERNAME
+                      value: "admin"
+                    - name: DB_PASSWORD
+                      value: "password"
+                    - name: DB_DATABASE
+                      value: "exampledb"
+                    - name: DB_DRIVER
+                      value: "postgresql"
+                    - name: DB_NONXA
+                      value: "true"
+                  resources:
+                    requests:
+                      memory: "512Mi"
+                      cpu: "500m"
+                    limits:
+                      memory: "1Gi"
+                      cpu: "1"
 ---
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
