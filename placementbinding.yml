@@ -1,0 +1,13 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyBinding
+metadata:
+  name: jboss-eap-binding
+  namespace: policies
+spec:
+  placement:
+    - placementRef:
+        kind: PlacementRule
+        name: production-clusters
+  subjects:
+    - kind: Policy
+      name: jboss-eap-operator-policy
