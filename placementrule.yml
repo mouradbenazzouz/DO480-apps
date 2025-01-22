@@ -1,0 +1,9 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: production-clusters
+  namespace: policies
+spec:
+  clusterSelector:
+    matchLabels:
+      env: production
