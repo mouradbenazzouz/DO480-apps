@@ -1,5 +1,5 @@
 ---
-apiVersion: apps.open-cluster-management.io/v1
+apiVersion: app.k8s.io/v1beta1
 kind: PlacementRule
 metadata:
   name: httpd-placement-rule
@@ -9,7 +9,7 @@ spec:
     matchLabels:
       environment: production
 ---
-apiVersion: apps.open-cluster-management.io/v1
+apiVersion: app.k8s.io/v1beta1
 kind: PlacementBinding
 metadata:
   name: httpd-placement-binding
