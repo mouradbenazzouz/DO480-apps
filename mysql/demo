@@ -1,0 +1,28 @@
+apiVersion: upgrade.open-cluster-management.io/v1
+kind: ClusterUpgradePolicy
+metadata:
+  name: example-cluster-upgrade-policy
+spec:
+  clusterSelector:
+    matchLabels:
+      environment: production # Apply this policy to clusters with this label
+  desiredUpdate: 4.12.15      # The target OpenShift version
+  upgradeAt: "2025-02-01T01:00:00Z" # Schedule the upgrade (UTC format)
+  upgradeType: Rolling        # Specify a rolling upgrade to avoid downtime
+  maxConcurrency: 1           # Control the number of concurrent node upgrades
+  nodeDrainStrategy:          # Define node drain settings to protect workloads
+    timeout: 120              # Time in seconds to wait before forcefully evicting pods
+    force: false              # Set to false to avoid force-draining nodes
+    podPriorityThreshold: -10 # Minimum pod priority value that will delay node drain
+  controlPlaneUpgradeStrategy: # Ensure control plane upgrades happen sequentially
+    delayAfterEach: 300       # Wait time (in seconds) after upgrading each control plane node
+  workloadProtectionStrategy: # Protect application workloads during upgrades
+    workloadCheckTimeout: 600 # Time to wait for workloads to stabilize
+    criticalNamespaces:       # List of critical namespaces to monitor during upgrades
+      - my-production-apps
+      - monitoring
+  observability:
+    monitorWithPolicy: true   # Enable monitoring and alerts for upgrade issues
+    reportLocation: 
+      type: Prometheus        # Use Prometheus to report metrics
+      url: http://prometheus.example.com
