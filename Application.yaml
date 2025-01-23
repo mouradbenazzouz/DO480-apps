@@ -1,0 +1,25 @@
+apiVersion: operator.open-cluster-management.io/v1
+kind: Application
+metadata:
+  name: httpd
+  namespace: open-cluster-management
+spec:
+  displayName: HTTPD Application
+  description: Deploy HTTPD with Bitnami Helm chart
+  source:
+    helm:
+      releaseName: httpd-release
+      chart: httpd
+      version: 10.0.0
+      repoURL: https://charts.bitnami.com/bitnami
+      targetNamespace: httpd-namespace
+      values: |
+        replicaCount: 2
+        image:
+          tag: "2.4.51-debian-10-r2"
+        service:
+          type: ClusterIP
+          port: 80
+  placement:
+    placementRef:
+      name: multi-cluster-placement
