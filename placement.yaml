@@ -1,9 +1,23 @@
-apiVersion: operator.open-cluster-management.io/v1
-kind: Placement
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
 metadata:
-  name: multi-cluster-placement
+  name: httpd-placement-rule
   namespace: open-cluster-management
 spec:
-  clusters:
-    - name: cluster-1
-    - name: cluster-2
+  clusterSelector:
+    matchLabels:
+      environment: production
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: httpd-placement-binding
+  namespace: open-cluster-management
+placementRef:
+  kind: PlacementRule
+  name: httpd-placement-rule
+subjects:
+  - kind: Application
+    name: httpd
+    apiGroup: app.k8s.io
