@@ -1,0 +1,6 @@
+replicaCount: 2
+image:
+  tag: "2.4.51-debian-10-r2"
+service:
+  type: ClusterIP
+  port: 80
